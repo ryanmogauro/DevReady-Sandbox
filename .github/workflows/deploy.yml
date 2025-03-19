@@ -3,6 +3,7 @@ name: Deploy to Azure Container App
 on:
   push:
     branches: [ main ]
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -14,6 +15,7 @@ jobs:
       run: |
         pwd
         ls -la
+        find . -name "Dockerfile" -type f
         
     - name: Log in to Azure
       uses: azure/login@v1
@@ -30,8 +32,8 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v4
       with:
-        context: .
-        file: ./Dockerfile
+        context: ./runner_service
+        file: ./runner_service/Dockerfile
         push: true
         tags: devreadyregistry.azurecr.io/code-runner:latest
     
