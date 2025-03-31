@@ -4,6 +4,7 @@ FROM python:3.11-slim
 RUN apt-get update && apt-get install -y \
     nodejs npm \
     wget \
+    ca-certificates \
     golang \
     && npm install -g typescript \
     && apt-get clean \
@@ -11,7 +12,7 @@ RUN apt-get update && apt-get install -y \
 
 # Install OpenJ9 (memory-efficient JVM)
 RUN mkdir -p /opt/java && \
-    wget -q https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.8%2B7_openj9-0.40.0/OpenJDK17U-jdk_x64_linux_openj9_17.0.8_7_openj9-0.40.0.tar.gz -O /tmp/openjdk.tar.gz && \
+    wget -q https://github.com/ibmruntimes/semeru17-binaries/releases/download/jdk-17.0.8.1%2B1_openj9-0.40.0/ibm-semeru-open-jdk_x64_linux_17.0.8.1_1_openj9-0.40.0.tar.gz -O /tmp/openjdk.tar.gz && \
     tar -xzf /tmp/openjdk.tar.gz -C /opt/java --strip-components=1 && \
     rm /tmp/openjdk.tar.gz
 
