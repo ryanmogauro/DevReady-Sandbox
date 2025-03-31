@@ -211,7 +211,8 @@ def execute_code(language: str, code_snippet: str, timeout: int = DEFAULT_TIMEOU
             resource.setrlimit(resource.RLIMIT_CPU, (timeout, timeout))
             
             # Set virtual memory limit
-            resource.setrlimit(resource.RLIMIT_AS, (512 * 1024 * 1024, 512 * 1024 * 1024))
+            resource.setrlimit(resource.RLIMIT_AS, (1024 * 1024 * 1024, 1024 * 1024 * 1024))
+
         
         # Execute the code with timeout
         logger.info(f"Starting execution [exec_id={execution_id}, timeout={timeout}s]")
