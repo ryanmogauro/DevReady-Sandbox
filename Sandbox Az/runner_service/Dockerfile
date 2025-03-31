@@ -1,13 +1,23 @@
 FROM python:3.11-slim
 
-# Install required programming language runtimes
+# Install required programming language runtimes except Java (we'll install OpenJ9 separately)
 RUN apt-get update && apt-get install -y \
     nodejs npm \
-    openjdk-17-jdk \
+    wget \
     golang \
     && npm install -g typescript \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+# Install OpenJ9 (memory-efficient JVM)
+RUN mkdir -p /opt/java && \
+    wget -q https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.8%2B7_openj9-0.40.0/OpenJDK17U-jdk_x64_linux_openj9_17.0.8_7_openj9-0.40.0.tar.gz -O /tmp/openjdk.tar.gz && \
+    tar -xzf /tmp/openjdk.tar.gz -C /opt/java --strip-components=1 && \
+    rm /tmp/openjdk.tar.gz
+
+# Add Java to the PATH and set memory options
+ENV PATH="/opt/java/bin:${PATH}"
+ENV _JAVA_OPTIONS="-Xmx64m -Xms16m"
 
 # Set working directory
 WORKDIR /app
@@ -37,7 +47,6 @@ RUN chmod +x /app/startup.sh
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
 ENV PORT=8000
-ENV _JAVA_OPTIONS="-Xmx64m -Xms16m"
 
 # Expose the port
 EXPOSE 8000
