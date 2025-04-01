@@ -206,7 +206,7 @@ def execute_code(language: str, code_snippet: str, timeout: int = DEFAULT_TIMEOU
         def limit_resources():
             # Set max proc count
             #High count for Go & Java threads
-            resource.setrlimit(resource.RLIMIT_NPROC, (100, 100))
+            resource.setrlimit(resource.RLIMIT_NPROC, (500, 500))
             
             # Set CPU time limit, in secs
             resource.setrlimit(resource.RLIMIT_CPU, (timeout, timeout))
