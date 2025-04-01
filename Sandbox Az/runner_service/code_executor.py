@@ -35,7 +35,7 @@ LANGUAGE_COMMANDS = {
     'python': lambda filename: ["python3", filename],
     'javascript': lambda filename: ["node", filename],
     'js': lambda filename: ["node", filename],
-    'java': lambda filename: ["java", "-Xmx64m", "-Xms16m", "-XX:ConcGCThreads=2", "-XX:ParallelGCThreads=2", Path(filename).stem],
+    'java': lambda filename: ["java", "-Xmx64m", "-Xms16m", "-XX:ConcGCThreads=2", "-XX:ParallelGCThreads=2", "-cp", ".", Path(filename).stem],
     'go': lambda filename: ["go", "run", "-gcflags", "-N -l", filename],
     'typescript': lambda filename: ["sh", "-c", f"tsc {filename} && node {Path(filename).with_suffix('.js')}"],
     'ts': lambda filename: ["sh", "-c", f"tsc {filename} && node {Path(filename).with_suffix('.js')}"]
