@@ -2,7 +2,7 @@
 set -e
 
 #Set ulimit to enable more threads
-ulimit -u 4096
+ulimit -u 8192
 
 ulimit -u
 
