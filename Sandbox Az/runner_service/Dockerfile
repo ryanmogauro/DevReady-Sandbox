@@ -37,6 +37,10 @@ RUN mkdir -p /home/sandbox/code && \
     chown -R sandbox:sandbox /home/sandbox/code && \
     chmod 755 /home/sandbox/code
 
+# Set process limits for the sandbox user
+RUN echo "sandbox soft nproc 4096" >> /etc/security/limits.conf && \
+    echo "sandbox hard nproc 8192" >> /etc/security/limits.conf
+
 # Copy application files
 COPY run_server.py /app/
 COPY code_executor.py /app/
@@ -55,9 +59,6 @@ EXPOSE 8000
 # Switch to non-root user for security
 USER sandbox
 
-#Set container limits
-RUN echo "sandbox soft nproc 1024" >> /etc/security/limits.conf && \
-    echo "sandbox hard nproc 2048" >> /etc/security/limits.conf
 
 # Start the application
 CMD ["/app/startup.sh"]
