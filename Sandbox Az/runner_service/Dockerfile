@@ -55,5 +55,9 @@ EXPOSE 8000
 # Switch to non-root user for security
 USER sandbox
 
+#Set container limits
+RUN echo "sandbox soft nproc 1024" >> /etc/security/limits.conf && \
+    echo "sandbox hard nproc 2048" >> /etc/security/limits.conf
+
 # Start the application
 CMD ["/app/startup.sh"]
