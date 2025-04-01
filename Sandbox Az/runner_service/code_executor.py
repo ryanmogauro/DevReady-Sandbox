@@ -205,7 +205,8 @@ def execute_code(language: str, code_snippet: str, timeout: int = DEFAULT_TIMEOU
         # Prevent fork bombs and other resource abuse
         def limit_resources():
             # Set max proc count
-            resource.setrlimit(resource.RLIMIT_NPROC, (20, 20))
+            #High count for Go & Java threads
+            resource.setrlimit(resource.RLIMIT_NPROC, (100, 100))
             
             # Set CPU time limit, in secs
             resource.setrlimit(resource.RLIMIT_CPU, (timeout, timeout))
